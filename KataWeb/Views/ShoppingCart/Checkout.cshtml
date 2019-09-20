@@ -1,0 +1,57 @@
+﻿@model KataWeb.Models.AdressInformation
+@{
+    ViewBag.Title = "Checkout";
+}
+<link href="~/CSS/CheckoutCSS.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post))
+{
+
+
+    <div class="container" style="padding-left:150px;">
+        <div class="form-sec" style="padding-left:50px;">
+            <h4 style="font-size:20px;">Kontakt</h4>
+
+            <form>
+                <div class="form-group">
+                    @Html.Label("Ime")
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Prezime")
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Adresa")
+                    @Html.TextBoxFor(x => x.Adress, new { @class = "form-control" })
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Grad")
+                    @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Poštanski broj")
+                    @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control" })
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Telefon")
+                    @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+
+                </div>
+
+
+                <button type="submit" class="btn btn-info">Naruči</button>
+            </form>
+        </div>
+
+    </div>
+
+
+
+}
+

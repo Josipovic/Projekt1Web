@@ -1,0 +1,72 @@
+﻿@using KataWeb.Models
+
+<h2>Košarica</h2>
+
+
+@if (Session["cart"] != null)
+{
+    if (((List<Item>)Session["cart"]).Count != 0)
+    {
+        <p>Sadržaj vaše košarice:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Proizvod</th>
+                    <th>Količina</th>
+                    <th>Ukupno</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    decimal suma = 0;
+                }
+
+                @foreach (var item in (List<Item>)Session["cart"])
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Count</td>
+                        @if (item.Product.Discount == true)
+                        {
+                            suma += (item.Product.DiscountPrice * item.Count);
+                            <td>@(item.Product.DiscountPrice * item.Count) Kn</td>
+                        }
+                        else
+                        {
+                            suma += (item.Product.Price * item.Count);
+                            <td>@(item.Product.Price * item.Count) Kn</td>
+                        }
+                        <td>
+                            <a href="@Url.Action("IncreaseCount","ShoppingCart",new {Id=item.Product.Id })">+</a>
+
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DecreaseCount","ShoppingCart",new {Id=item.Product.Id })">-</a>
+
+                        </td>
+                        <td>
+                            <a href="@Url.Action("RemoveFromCart","ShoppingCart",new {Id=item.Product.Id })">Ukloni</a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>Ukupni iznos</td>
+                    <td>@suma Kn</td>
+                </tr>
+            </tbody>
+        </table>
+        @Html.ActionLink("Naruči", "Checkout", "ShoppingCart",
+                                   new { @class = "btn btn-info" })
+    }
+    else
+    {
+        <p>Vaša košarica je prazna.</p>
+    }
+
+}
+else
+{
+    <p>Vaša košarica je prazna</p>
+}
+

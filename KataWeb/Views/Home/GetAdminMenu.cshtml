@@ -1,0 +1,8 @@
+﻿@if (User.Identity.IsAuthenticated && User.Identity.Name == "katarina.josipovic@gmail.com")
+{
+
+    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Categories")">Kategorije</a></li>
+    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Products")">Proizvodi</a></li>
+
+}
+

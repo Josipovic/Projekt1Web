@@ -1,0 +1,25 @@
+﻿@model KataWeb.Models.Product
+
+<link href="~/CSS/GetRandomDiscountedProductCSS.css" rel="stylesheet" />
+
+<a href="@Url.Action("Details","Home",new {Id=Model.Id })">
+    <div class="offer offer-info">
+        <div class="shape">
+            <div class="shape-text">
+                Akcija
+            </div>
+        </div>
+        <div class="offer-content">
+            <h3 class="lead">
+                <br />
+                <br />
+                @Model.Name
+            </h3>
+            <p>
+                @Model.DiscountPrice Kn
+                <br>
+                <del>@Model.Price Kn</del>
+            </p>
+        </div>
+    </div>
+</a>

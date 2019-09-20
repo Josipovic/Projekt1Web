@@ -1,0 +1,26 @@
+﻿@using KataWeb.Models
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+@{var count = Session["cart"] == null ? 0 : ((List<Item>)Session["cart"]).Sum(x => x.Count);
+
+}
+
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+
+        <a href="@Url.Action("Index","ShoppingCart",new {@class="nav-link" })">
+            @if (count == 0)
+            {
+                <span class="fa fa-shopping-cart"></span>
+            }
+            else
+            {
+                <span class="fa fa-shopping-cart"></span>
+                <span class="badge-info">@count</span>
+            }
+
+        </a>
+    </li>
+
+</ul>

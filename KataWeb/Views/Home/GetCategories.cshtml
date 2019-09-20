@@ -1,0 +1,33 @@
+﻿@model List<KataWeb.Models.Category>
+
+
+<link href="~/CSS/GetCategoriesCSS.css" rel="stylesheet" />
+
+<div class="single category">
+    <h3 class="side-title">Kategorije</h3>
+    <ul class="list-unstyled">
+        @foreach (var cat in Model)
+        {
+
+            <li> @Html.ActionLink(cat.Name, "GetProducts", new { categoryId = cat.Id }) <span class="pull-right"></span></li>
+        }
+
+
+    </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

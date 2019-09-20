@@ -1,0 +1,127 @@
+﻿@model KataWeb.Models.Product
+
+@{
+    ViewBag.Title = "Detalji";
+}
+@*<link href="~/CSS/DetailsCSS.css" rel="stylesheet" />*@
+
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<!------ Include the above in your HEAD tag ---------->
+@*<div class="container">
+
+
+    <div class="card">
+        <div class="row">
+            <aside class="col-sm-5 ">
+                <artile class="gallery-wrap">
+                    <div class="img-big-wrap ">
+                        <div> <img src="@Url.Content(Model.ImageUrl)"></div>
+                    </div>
+                </artile> <!-- gallery-wrap .end// -->
+            </aside>
+            <aside class="col-sm-7" style="padding-left:100px;">
+                <article class="card-body p-5">
+                    <h3 class="title mb-3">@Model.Name</h3>
+                    <hr />
+                    <p class="price-detail-wrap">
+                        @if (Model.Discount == true)
+                        {
+                            <span class="price h3 text-warning">
+                                <del>@Model.Price Kn</del>
+                                <br />
+                                <span>@Model.DiscountPrice Kn</span>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="price h3 text-warning">
+                                <span>@Model.Price Kn</span>
+                            </span>
+                        }
+
+                    </p> <!-- price-detail-wrap .// -->
+                    <hr />
+                    <dl class="item-property">
+                        <dt>Opis</dt>
+                        <dd>
+                            <p>
+                                @Model.Description
+                            </p>
+                        </dd>
+                    </dl>
+                    <hr />
+                    <dl class="param param-feature">
+                        <dt>Model</dt>                        NE VALJA OVAJ KOD,PROBLEM SA PRIKAZOM SLIKE
+                        <dd>@Model.Model</dd>
+                    </dl>  <!-- item-property-hor .// -->
+
+                    <dl class="param param-feature">
+                        <dt>Boja</dt>
+                        <dd>@Model.Colour</dd>
+                    </dl>  <!-- item-property-hor .// -->
+                    @if (Model.Available)
+                    {<dl class="param param-feature">
+                            <dt>Dostava</dt>
+                            <dd>@Model.Delivery</dd>
+                        </dl>
+                    }
+                    else
+                    {<dl class="param param-feature">
+                            <dt>Dostava</dt>
+                            <dd>@Model.Delivery -Nedostupan</dd>
+                        </dl>
+                    }
+
+
+                    <hr>
+
+                    <a href="@Url.Action("AddToCart","ShoppingCart",new {Id=Model.Id })" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart glyphicon glyphicon-shopping-cart"></i> U košaricu </a>
+                </article> <!-- card-body.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+    </div> <!-- card.// -->
+
+</div>
+<!--container.//-->*@
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img class="img-thumbnail" src="@Url.Content(Model.ImageUrl)" />
+
+        </div>
+        <div class="col text-md-left">
+            <h4>@Model.Name</h4>
+            @if (Model.Discount == true)
+            {
+                <del style="font-size:15px;">@Model.Price Kn</del>
+                <br />
+                <span style="font-size:20px;">@Model.DiscountPrice Kn</span>
+            }
+            else {
+                <span style="font-size:20px;">@Model.Price Kn</span>
+            }
+            <br />
+            <br />
+            <p class="text-md-left"><b>Opis:</b> @Model.Description</p>
+            <p><b>Jamstvo:</b> @Model.Warranty mj.</p>
+            <p><b>Boja:</b> @Model.Colour</p>
+            <p><b>Model:</b> @Model.Model</p>
+            @if (Model.Available == true)
+            {
+
+                <p><b>Dostava:</b> @Model.Delivery</p>
+            }
+            else {
+                <p><b>Dostava:</b> Proizvod je trenutno nedostupan</p>
+            }
+            <div>
+                <a href="@Url.Action("AddToCart","ShoppingCart",new {Id=Model.Id })" class="fa fa-shopping-cart btn btn-info">U košaricu</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

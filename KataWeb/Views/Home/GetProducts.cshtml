@@ -1,0 +1,137 @@
+﻿@model  IPagedList<KataWeb.Models.Product>
+@using PagedList;
+@using PagedList.Mvc;
+@using System.Web.UI.WebControls;
+
+
+<link href="~/CSS/GetProductsCSS.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+<style>
+    .product-discount-label {
+        color: #fff;
+        background-color: #ef5777;
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 2px 7px;
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 0;
+    }
+
+    .img-wrap:hover {
+        -moz-box-shadow: 0 0 10px #ccc;
+        -webkit-box-shadow: 0 0 10px #ccc;
+        box-shadow: 0 0 10px #0094ff;
+    }
+</style>
+
+@{
+    ViewBag.Title = "GetProducts";
+}
+
+
+@{
+
+    int count = 0;
+}
+
+
+
+
+@using (Html.BeginForm("GetProducts", "Home", FormMethod.Get))
+{
+    @Html.Hidden("categoryId", Request.QueryString["categoryId"])
+    @Html.TextBox("search", "", new { @class = "form-control col-sm-2", @style = "display:inline;" })
+    <button class="btn btn-outline-info" type="submit"><span class="fa fa-search"></span>Pretraži</button>
+}
+<br />
+
+@{var listItems = new List<ListItem>()
+{
+new ListItem { Text="Naziv A-Z",Value=""},
+new ListItem{ Text="Naziv Z-A",Value="NameDesc"},
+new ListItem { Text="Prvo najjeftiniji",Value="Price"},
+new ListItem {Text="Prvo najskuplji",Value="PriceDesc" }
+};
+
+}
+@using (Html.BeginForm("GetProducts", "Home", FormMethod.Get))
+{
+    @Html.Hidden("categoryId", Request.QueryString["categoryId"])
+    @Html.Hidden("search", Request.QueryString["search"])
+    @Html.DropDownList("orderBy",new SelectList(listItems,"Value","Text"),new {@class= "btn btn-secondary dropdown-toggle" @*"form-control",
+    @style ="display:inline;"*@ })
+    <button class="btn btn-outline-info" type="submit"><span class="fa fa-sort"></span>Poredaj</button>
+
+
+}
+
+
+<br />
+<br />
+
+@foreach (var p in Model)
+{
+
+    @(count % 3 == 0 ? Html.Raw("<div class='row'>") : Html.Raw(""))
+    <div class="col-md-4">
+
+        <figure class="card card-product">
+
+            <div class="img-wrap">
+                @if (p.Discount == true)
+                {
+                    <span class="product-discount-label">Akcija</span>
+                }
+
+                <a href="@Url.Action("Details", "Home", new { Id = p.Id })"><img src="@Url.Content(p.ImageUrl)"></a>
+
+            </div>
+            <figcaption class="info-wrap">
+                <h6 class="title  text-center">@p.Name</h6>
+                <hr />
+                <p class="desc">@p.ShortDesc</p>
+
+            </figcaption>
+
+            <div class="bottom-wrap">
+                <a href="@Url.Action("AddToCart","ShoppingCart", new { Id=p.Id})" class="btn btn-sm btn-primary float-right "><span class="fa fa-shopping-cart"></span>U košaricu</a>
+
+                @if (p.Discount == true)
+                {
+                    <div class="price-wrap h5">
+                        <del class="price-old" style="font-size:15px;">@p.Price Kn</del>
+                        <br />
+                        <br />
+                        <span class="price-new" style="font-size:15px;">@p.DiscountPrice Kn</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="price-wrap h5">
+                        <span class="price-new" style="font-size:16px;">@p.Price Kn</span>
+                    </div>
+                }
+
+                <!-- price-wrap.// -->
+            </div> <!-- bottom-wrap.// -->
+        </figure>
+
+    </div>
+
+
+    @(count % 3 == 2 && count < Model.Count() - 1 ?
+                                                                                        Html.Raw("</div>") : Html.Raw(""))
+    count++;
+
+}
+@(Html.Raw("</div>"))
+
+@Html.PagedListPager(Model, page => Url.Action("GetProducts", new { page, categoryId = Request.QueryString["categoryId"]
+    ,orderBy=Request.QueryString["orderBy"],
+search=Request.QueryString["search"]}),
+    new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+
